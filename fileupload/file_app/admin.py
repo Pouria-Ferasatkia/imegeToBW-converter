@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import File
+from .models import Video
 
-@admin.register(File)
+@admin.register(Video)
 class FileAdmin(admin.ModelAdmin):
     pass
