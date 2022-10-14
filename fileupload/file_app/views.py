@@ -6,7 +6,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import FileSerializer
-from fileupload.tasks import resize
+from file_app.tasks import resize
 
 class FileView(APIView):
   parser_classes = (MultiPartParser, FormParser)
@@ -14,10 +14,9 @@ class FileView(APIView):
   def post(self, request, *args, **kwargs):
     file_serializer = FileSerializer(data=request.data)
     if file_serializer.is_valid():
-      file_serializer.save()
-      video = file_serializer.create(file_serializer.data)
+      instance = file_serializer.save()
       resize.delay(
-            video
+            file_serializer.data.get('id'),file_serializer.data.get('text'),file_serializer.data.get('file')
         )
       return Response(file_serializer.data, status=status.HTTP_201_CREATED)
     else:
