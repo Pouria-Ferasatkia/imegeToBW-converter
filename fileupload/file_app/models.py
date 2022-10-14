@@ -11,7 +11,7 @@ class Video(models.Model):
   text = models.TextField(blank=False, null=True)
   newtext = models.TextField(blank=False, null=True)
   file = models.FileField(upload_to='mainImage', null=True)
-  file_bw = models.FileField(upload_to='bwImage', null =True)
+  file_bw = models.FileField(upload_to='NEWbwImage', null =True)
 
   #def save(file):
    #self.file_bw.save(file)

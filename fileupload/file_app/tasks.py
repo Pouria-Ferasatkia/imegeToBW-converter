@@ -1,7 +1,8 @@
 # tasks.py
 from importlib.resources import contents
+from unicodedata import name
 import uuid
-
+import os
 from django.db import models
 from file_app.models import Video 
 from time import sleep
@@ -23,14 +24,14 @@ def resize(videoid,textt,file):
   
   color_image = Image.open(obj.file)
   bw = color_image.convert('1', dither=Image.NONE)
-  path = "media/bwImage/a.png"
-  bw.save(path)
+  nameFile = 'bw'+os.path.basename(obj.file.name)
+  path = f"/Users/pouria/Documents/uploadVideo/fileupload/media/temp/{nameFile}"
+
+  bw.save(path) 
   path = Path(path)
   
   obj.newtext = reverse_text
- # path = Path(obj.file.path)
-  obj.file_bw.save("abc.png",File(open('media/bwImage/a.png', 'rb')))
-  
-#  obj.file_bw.save(obj.file.name,File(bw))
- # obj.file_bw = File(bw,name=obj.file.name)
- 
+  nameFile_bw = 'bw'+f'media/temp/bw{nameFile}'
+  obj.file_bw.save(nameFile,File(open(f'media/temp/{nameFile}', 'rb')))
+  os.remove(path)
+
